@@ -14,13 +14,14 @@ import com.gestao_pessoas.tccII.enums.Sexo;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "pessoas")
+@Table(name = "tb_pessoas")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Pessoa implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	@NotNull
@@ -62,6 +63,7 @@ public class Pessoa implements Serializable{
 		this.sexo = sexo;
 		this.empresa = empresa;
 	}
+	public Pessoa() {}
 	
 	//GETTERS e SETTERS
 	public Long getId() {

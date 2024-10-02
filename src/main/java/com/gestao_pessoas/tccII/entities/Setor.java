@@ -8,10 +8,13 @@ import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "setor")
+@Table(name = "tb_setor")
 public class Setor implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -28,7 +31,8 @@ public class Setor implements Serializable{
 	private LocalDate dataInicial;
 	private LocalDate dataFinal;
 	
-	@OneToMany(mappedBy = "setor")
+	@OneToMany(mappedBy = "setor", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<Cargo> cargos;
 	
 	@OneToMany(mappedBy = "setor")
@@ -36,30 +40,35 @@ public class Setor implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "empresa_id")
+	@JsonBackReference
 	private Empresa empresa;
 	
 	//CONSTRUCTORS
-	public Setor(Long id, String nome, String descricao, LocalDate dataInicial) {
+	public Setor(Long id, String nome, String descricao, LocalDate dataInicial, Empresa empresa) {
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.dataInicial = dataInicial;
+		this.empresa = empresa;
 	}
-	public Setor(Long id, String nome, String descricao, LocalDate dataInicial, List<Cargo> cargos) {
+	public Setor(Long id, String nome, String descricao, LocalDate dataInicial, Empresa empresa, List<Cargo> cargos) {
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.dataInicial = dataInicial;
 		this.cargos = cargos;
+		this.empresa = empresa;
 	}
-	public Setor(Long id, String nome, String descricao, LocalDate dataInicial, List<Cargo> cargos, List<Colaborador> colaboradores) {
+	public Setor(Long id, String nome, String descricao, LocalDate dataInicial, Empresa empresa, List<Cargo> cargos, List<Colaborador> colaboradores) {
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.dataInicial = dataInicial;
 		this.cargos = cargos;
 		this.colaboradores = colaboradores;
+		this.empresa = empresa;
 	}
+	public Setor() {}
 	
 	//GETTERS e SETTERS
 	public Long getId() {

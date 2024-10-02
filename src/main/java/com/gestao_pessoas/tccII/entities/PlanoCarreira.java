@@ -2,6 +2,7 @@ package com.gestao_pessoas.tccII.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 import javax.validation.constraints.NotEmpty;
@@ -12,7 +13,7 @@ import com.gestao_pessoas.tccII.enums.NivelPlanoCarreira;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "plano_carreira")
+@Table(name = "tb_plano_carreira")
 public class PlanoCarreira implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -30,7 +31,10 @@ public class PlanoCarreira implements Serializable{
 	
 	private double remuneracao;
 	private LocalDate dataInicial;
-	private LocalDate dataFinal;
+	private LocalDate dataFinal;	
+	
+	@OneToMany(mappedBy = "nivelProfissional")
+	private List<Cargo> cargos;
 	
 	//CONSTRUCTOR
 	public PlanoCarreira(Long id, String nome, NivelPlanoCarreira nivel, double remuneracao, LocalDate dataInicial) {
@@ -40,6 +44,7 @@ public class PlanoCarreira implements Serializable{
 		this.remuneracao = remuneracao;
 		this.dataInicial = dataInicial;
 	}
+	public PlanoCarreira() {}
 	
 	//GETTERS e SETTERS
 	public Long getId() {

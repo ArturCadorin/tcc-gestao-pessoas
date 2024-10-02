@@ -12,13 +12,10 @@ import com.gestao_pessoas.tccII.enums.SituacaoColaborador;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "tb_colaborador")
 public class Colaborador extends Pessoa {
 
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 	
 	@NotNull
 	@NotEmpty
@@ -51,10 +48,6 @@ public class Colaborador extends Pessoa {
 	}
 	
 	//GETTERS e SETTERS
-	public Long getId() {
-		return id;
-	}
-	
 	public int getMatricula() {
 		return matricula;
 	}
@@ -143,7 +136,7 @@ public class Colaborador extends Pessoa {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(id, matricula);
+		result = prime * result + Objects.hash(matricula);
 		return result;
 	}
 
@@ -156,7 +149,6 @@ public class Colaborador extends Pessoa {
 		if (getClass() != obj.getClass())
 			return false;
 		Colaborador other = (Colaborador) obj;
-		return id == other.id && matricula == other.matricula;
+		return matricula == other.matricula;
 	}
-	
 }

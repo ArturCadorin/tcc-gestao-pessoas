@@ -10,10 +10,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "empresa")
+@Table(name = "tb_empresa")
 public class Empresa implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -35,10 +37,12 @@ public class Empresa implements Serializable{
 	
 	private LocalDate dataInicial;
 	
-	@OneToMany(mappedBy = "empresa")
+	@OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<Setor> setores;
 	
 	@OneToMany(mappedBy = "empresa")
+	@JsonManagedReference
 	private List<Cargo> cargos;
 	
 	@OneToMany(mappedBy = "empresa")
@@ -51,6 +55,7 @@ public class Empresa implements Serializable{
 		this.cnpj = cnpj;
 		this.dataInicial = dataInicial;
 	}
+	public Empresa() {}
 	
 	//GETTERS e SETTERS
 	public Long getId() {

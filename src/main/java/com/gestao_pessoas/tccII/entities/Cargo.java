@@ -8,10 +8,12 @@ import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "cargo")
+@Table(name = "tb_cargo")
 public class Cargo implements Serializable{	
 	
 	private static final long serialVersionUID = 1L;
@@ -30,10 +32,12 @@ public class Cargo implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "setor_id")
+	@JsonBackReference
 	private Setor setor;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "nivel_profissional_id")
+	@JsonBackReference
 	protected PlanoCarreira nivelProfissional;
 	
 	@OneToMany(mappedBy = "cargo")
@@ -41,28 +45,37 @@ public class Cargo implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "empresa_id")
+	@JsonBackReference
 	private Empresa empresa;
 	
 	//CONSTRUCTORS
-	public Cargo(Long id, String nome, String descricao, LocalDate dataInicial, Setor setor, PlanoCarreira nivelProfissional) {
+	public Cargo(Long id, String nome, String descricao, LocalDate dataInicial) {
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.dataInicial = dataInicial;
+	}
+	public Cargo(Long id, String nome, String descricao, LocalDate dataInicial, Empresa empresa, Setor setor, PlanoCarreira nivelProfissional) {
+		this.id = id;
+		this.nome = nome;
+		this.descricao = descricao;
+		this.dataInicial = dataInicial;
+		this.empresa = empresa;
 		this.setor = setor;
 		this.nivelProfissional = nivelProfissional;
 	}
-	public Cargo(Long id, String nome, String descricao, LocalDate dataInicial, Setor setor, PlanoCarreira nivelProfissional, List<Colaborador> colaboradores) {
+	public Cargo(Long id, String nome, String descricao, LocalDate dataInicial, Empresa empresa,  Setor setor, PlanoCarreira nivelProfissional, List<Colaborador> colaboradores) {
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.dataInicial = dataInicial;
+		this.empresa = empresa;
 		this.setor = setor;
 		this.nivelProfissional = nivelProfissional;
 		this.colaboradores = colaboradores;
 	}
-	
-	
+	public Cargo() {}
+
 	//GETTERS e SETTERS
 	public Long getId() {
 		return id;

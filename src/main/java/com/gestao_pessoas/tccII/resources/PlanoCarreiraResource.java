@@ -8,21 +8,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import com.gestao_pessoas.tccII.entities.Empresa;
-import com.gestao_pessoas.tccII.services.EmpresaService;
+import com.gestao_pessoas.tccII.entities.PlanoCarreira;
+import com.gestao_pessoas.tccII.services.PlanoCarreiraService;
 
 @RestController
-@RequestMapping(value = "/empresa")
-public class EmpresaResource {
-
+@RequestMapping(value = "/plano_carreira")
+public class PlanoCarreiraResource {
+	
 	@Autowired
-	private EmpresaService service;
+	private PlanoCarreiraService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Empresa>> findAll(){
-		
-		List<Empresa> list = service.findAll();
+	public ResponseEntity<List<PlanoCarreira>> findAll(){
+		List<PlanoCarreira> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
+
 }
