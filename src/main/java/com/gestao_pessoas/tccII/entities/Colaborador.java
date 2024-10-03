@@ -6,6 +6,8 @@ import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gestao_pessoas.tccII.enums.Sexo;
 import com.gestao_pessoas.tccII.enums.SituacaoColaborador;
 
@@ -29,10 +31,12 @@ public class Colaborador extends Pessoa {
 	
 	@ManyToOne
 	@JoinColumn(name = "setor_id")
+	@JsonBackReference
 	private Setor setor;
 	
 	@ManyToOne
 	@JoinColumn(name = "cargo_id")
+	@JsonBackReference	
 	private Cargo cargo;
 	
 	private int diasAfastado;
@@ -45,6 +49,9 @@ public class Colaborador extends Pessoa {
 		this.dataAdmissao = dataAdmissao;
 		this.setor = setor;
 		this.cargo = cargo;
+	}
+	public Colaborador() {
+		super();
 	}
 	
 	//GETTERS e SETTERS

@@ -9,13 +9,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gestao_pessoas.tccII.enums.Sexo;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tb_pessoas")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Pessoa implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -51,6 +52,7 @@ public class Pessoa implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "empresa_id")
+	@JsonBackReference
 	private Empresa empresa;
 	
 	//CONSTRUCTOR

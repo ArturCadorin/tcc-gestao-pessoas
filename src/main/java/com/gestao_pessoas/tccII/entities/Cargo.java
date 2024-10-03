@@ -9,6 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 
@@ -37,10 +38,11 @@ public class Cargo implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "nivel_profissional_id")
-	@JsonBackReference
+	@JsonManagedReference
 	protected PlanoCarreira nivelProfissional;
-	
+		
 	@OneToMany(mappedBy = "cargo")
+	@JsonManagedReference
 	private List<Colaborador> colaboradores;
 	
 	@ManyToOne

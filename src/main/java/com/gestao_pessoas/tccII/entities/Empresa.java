@@ -46,6 +46,7 @@ public class Empresa implements Serializable{
 	private List<Cargo> cargos;
 	
 	@OneToMany(mappedBy = "empresa")
+	@JsonManagedReference
 	private List<Colaborador> colaboradores;
 	
 	//CONSTRUCTORS

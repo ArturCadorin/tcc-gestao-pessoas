@@ -8,6 +8,7 @@ import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gestao_pessoas.tccII.enums.NivelPlanoCarreira;
 
 import jakarta.persistence.*;
@@ -34,6 +35,7 @@ public class PlanoCarreira implements Serializable{
 	private LocalDate dataFinal;	
 	
 	@OneToMany(mappedBy = "nivelProfissional")
+	@JsonBackReference
 	private List<Cargo> cargos;
 	
 	//CONSTRUCTOR
@@ -44,7 +46,9 @@ public class PlanoCarreira implements Serializable{
 		this.remuneracao = remuneracao;
 		this.dataInicial = dataInicial;
 	}
-	public PlanoCarreira() {}
+	public PlanoCarreira() {
+		super();
+	}
 	
 	//GETTERS e SETTERS
 	public Long getId() {
@@ -84,6 +88,13 @@ public class PlanoCarreira implements Serializable{
 	}
 	public void setDataFinal(LocalDate dataFinal) {
 		this.dataFinal = dataFinal;
+	}
+	
+	public List<Cargo> getCargos() {
+		return cargos;
+	}
+	public void setCargos(List<Cargo> cargos) {
+		this.cargos = cargos;
 	}
 	
 	// Método para alteração salarial baseado em porcentagem

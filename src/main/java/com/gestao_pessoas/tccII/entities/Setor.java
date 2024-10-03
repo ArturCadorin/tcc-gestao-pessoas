@@ -36,6 +36,7 @@ public class Setor implements Serializable{
 	private List<Cargo> cargos;
 	
 	@OneToMany(mappedBy = "setor")
+	@JsonManagedReference
 	private List<Colaborador> colaboradores;
 	
 	@ManyToOne
