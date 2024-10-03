@@ -12,7 +12,7 @@ import com.gestao_pessoas.tccII.entities.Pessoa;
 import com.gestao_pessoas.tccII.services.PessoaService;
 
 @RestController
-@RequestMapping(value = "/pessoa")
+@RequestMapping(value = "/pessoas")
 public class PessoaResource {
 
 	@Autowired

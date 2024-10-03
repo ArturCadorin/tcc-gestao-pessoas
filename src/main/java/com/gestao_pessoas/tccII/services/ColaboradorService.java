@@ -1,6 +1,7 @@
 package com.gestao_pessoas.tccII.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,5 +18,11 @@ public class ColaboradorService {
 	// Buscar todas os colaboradores
 	public List<Colaborador> findAll(){
 		return repository.findAll();
+	}
+	
+	// Buscar por ID
+	public Colaborador findById(Long id) {
+		Optional<Colaborador> obj = repository.findById(id);
+		return obj.get();
 	}
 }

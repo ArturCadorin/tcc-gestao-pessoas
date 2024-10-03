@@ -6,8 +6,8 @@ import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.gestao_pessoas.tccII.enums.Sexo;
 import com.gestao_pessoas.tccII.enums.SituacaoColaborador;
 
@@ -15,6 +15,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tb_colaborador")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Colaborador extends Pessoa {
 
 	private static final long serialVersionUID = 1L;
@@ -31,12 +32,10 @@ public class Colaborador extends Pessoa {
 	
 	@ManyToOne
 	@JoinColumn(name = "setor_id")
-	@JsonBackReference
 	private Setor setor;
 	
 	@ManyToOne
 	@JoinColumn(name = "cargo_id")
-	@JsonBackReference	
 	private Cargo cargo;
 	
 	private int diasAfastado;
@@ -49,6 +48,7 @@ public class Colaborador extends Pessoa {
 		this.dataAdmissao = dataAdmissao;
 		this.setor = setor;
 		this.cargo = cargo;
+		this.situacaoColaborador = SituacaoColaborador.TRABALHANDO;
 	}
 	public Colaborador() {
 		super();

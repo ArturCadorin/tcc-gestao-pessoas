@@ -8,13 +8,15 @@ import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tb_cargo")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Cargo implements Serializable{	
 	
 	private static final long serialVersionUID = 1L;
@@ -33,21 +35,18 @@ public class Cargo implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "setor_id")
-	@JsonBackReference
 	private Setor setor;
 	
 	@ManyToOne
 	@JoinColumn(name = "nivel_profissional_id")
-	@JsonManagedReference
 	protected PlanoCarreira nivelProfissional;
 		
 	@OneToMany(mappedBy = "cargo")
-	@JsonManagedReference
 	private List<Colaborador> colaboradores;
 	
 	@ManyToOne
 	@JoinColumn(name = "empresa_id")
-	@JsonBackReference
+	@JsonIgnore
 	private Empresa empresa;
 	
 	//CONSTRUCTORS

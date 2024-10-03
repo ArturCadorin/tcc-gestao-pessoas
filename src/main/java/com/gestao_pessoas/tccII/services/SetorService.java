@@ -1,6 +1,7 @@
 package com.gestao_pessoas.tccII.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,5 +18,11 @@ public class SetorService {
 	// Buscar todas as empresas
 	public List<Setor> findAll(){
 		return repository.findAll();
+	}
+	
+	// Buscar por ID
+	public Setor findById(Long id) {
+		Optional<Setor> obj = repository.findById(id);
+		return obj.get();
 	}
 }

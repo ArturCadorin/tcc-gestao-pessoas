@@ -10,12 +10,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tb_empresa")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Empresa implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -38,15 +41,14 @@ public class Empresa implements Serializable{
 	private LocalDate dataInicial;
 	
 	@OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
-	@JsonManagedReference
 	private List<Setor> setores;
 	
 	@OneToMany(mappedBy = "empresa")
-	@JsonManagedReference
+	@JsonIgnore
 	private List<Cargo> cargos;
 	
 	@OneToMany(mappedBy = "empresa")
-	@JsonManagedReference
+	@JsonIgnore
 	private List<Colaborador> colaboradores;
 	
 	//CONSTRUCTORS

@@ -1,6 +1,7 @@
 package com.gestao_pessoas.tccII.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,5 +18,11 @@ public class PlanoCarreiraService {
 	// Buscar todos os plano de carreiras
 	public List<PlanoCarreira> findAll(){
 		return repository.findAll();
+	}
+	
+	// Buscar por ID
+	public PlanoCarreira findById(Long id) {
+		Optional<PlanoCarreira> obj = repository.findById(id);
+		return obj.get();
 	}
 }
