@@ -25,4 +25,33 @@ public class ColaboradorService {
 		Optional<Colaborador> obj = repository.findById(id);
 		return obj.get();
 	}
+	
+	// Inserir cargo
+	public Colaborador insert(Colaborador obj) {
+		return repository.save(obj);
+	}
+			
+	// Deleção cargo
+	public void delete(Long id) {
+		repository.deleteById(id);
+	}
+			
+	// Atualizar cargo
+	public Colaborador update(Long id, Colaborador obj) {
+		Colaborador entity = repository.getReferenceById(id);
+		updateData(entity, obj);
+		return repository.save(entity);
+	}
+	
+	private void updateData(Colaborador entity, Colaborador obj) {
+		entity.setNome(obj.getNome());
+		entity.setDataFinal(obj.getDataFinal());
+		entity.setSituacaoColaborador(obj.getSituacaoColaborador());
+		entity.setSetor(obj.getSetor());
+		entity.setCargo(obj.getCargo());
+		entity.setDiasAfastado(obj.getDiasAfastado());
+		entity.setDiasFerias(obj.getDiasFerias());
+	}
 }
+
+
