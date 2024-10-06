@@ -27,7 +27,6 @@ public class ColaboradorResource {
 	
 	@GetMapping
 	public ResponseEntity<List<Colaborador>> findAll(){
-		
 		List<Colaborador> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}

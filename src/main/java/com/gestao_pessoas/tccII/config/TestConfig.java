@@ -25,7 +25,7 @@ import com.gestao_pessoas.tccII.repositories.SetorRepository;
 // Classe de configuração TESTE, exclusiva para popular banco de dados H2
 
 @Configuration
-@Profile("test")
+@Profile("dev")
 public class TestConfig implements CommandLineRunner{
 	
 	@Autowired

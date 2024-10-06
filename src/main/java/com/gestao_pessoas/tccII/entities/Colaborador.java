@@ -38,6 +38,8 @@ public class Colaborador extends Pessoa {
 	@JoinColumn(name = "cargo_id")
 	private Cargo cargo;
 	
+	private double remuneracao;
+	
 	private int diasAfastado;
 	private int diasFerias;
 	
@@ -49,6 +51,7 @@ public class Colaborador extends Pessoa {
 		this.setor = setor;
 		this.cargo = cargo;
 		this.situacaoColaborador = SituacaoColaborador.TRABALHANDO;
+		this.remuneracao = this.cargo.getNivelProfissional().getRemuneracao();
 	}
 	public Colaborador() {
 		super();
@@ -97,6 +100,13 @@ public class Colaborador extends Pessoa {
 		this.cargo = cargo;
 	}
 	
+	public double getRemuneracao() {
+		return remuneracao;
+	}
+	public void setRemuneracao(double remuneracao) {
+		this.remuneracao = remuneracao;
+	}
+	
 	public int getDiasAfastado() {
 		return diasAfastado;
 	}
@@ -135,8 +145,8 @@ public class Colaborador extends Pessoa {
 	// Aumenta o salário do colaborador
 	// Deve receber por paramêtro a porcentagem de bonificação
 	public void bonificacaoSalarial(double bonificacao) {
-		double salario = this.cargo.nivelProfissional.getRemuneracao();
-		this.cargo.nivelProfissional.alteracaoSalarial(salario, bonificacao);
+		double aumento = this.remuneracao * bonificacao / 100;
+		this.remuneracao += aumento;
 	}
 
 	@Override

@@ -65,7 +65,7 @@ public class PlanoCarreira implements Serializable{
 	public NivelPlanoCarreira getNivel() {
 		return nivel;
 	}
-	public void setNome(NivelPlanoCarreira nivel) {
+	public void setNivel(NivelPlanoCarreira nivel) {
 		this.nivel = nivel;
 	}
 
