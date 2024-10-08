@@ -1,4 +1,4 @@
-package com.gestao_pessoas.tccII.resources;
+package com.gestao_pessoas.tccII.controllers;
 
 import java.util.List;
 
@@ -8,20 +8,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gestao_pessoas.tccII.entities.Pessoa;
+import com.gestao_pessoas.tccII.dto.PessoaDTO;
 import com.gestao_pessoas.tccII.services.PessoaService;
 
 @RestController
 @RequestMapping(value = "/pessoas")
-public class PessoaResource {
+public class PessoaController {
 
 	@Autowired
 	private PessoaService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Pessoa>> findAll(){
+	public ResponseEntity<List<PessoaDTO>> findAll(){
 		
-		List<Pessoa> list = service.findAll();
+		List<PessoaDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 }

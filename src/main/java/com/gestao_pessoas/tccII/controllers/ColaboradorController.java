@@ -1,4 +1,4 @@
-package com.gestao_pessoas.tccII.resources;
+package com.gestao_pessoas.tccII.controllers;
 
 import java.net.URI;
 import java.util.List;
@@ -15,33 +15,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.gestao_pessoas.tccII.entities.Cargo;
-import com.gestao_pessoas.tccII.services.CargoService;
+import com.gestao_pessoas.tccII.dto.ColaboradorDTO;
+import com.gestao_pessoas.tccII.entities.Colaborador;
+import com.gestao_pessoas.tccII.services.ColaboradorService;
 
 @RestController
-@RequestMapping(value = "/cargos")
-public class CargoResource {
+@RequestMapping(value = "/colaboradores")
+public class ColaboradorController {
 
 	@Autowired
-	private CargoService service;
+	private ColaboradorService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Cargo>> findAll(){
-		List<Cargo> list = service.findAll();
+	public ResponseEntity<List<ColaboradorDTO>> findAll(){
+		List<ColaboradorDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Cargo> findById(@PathVariable Long id){
-		Cargo obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<ColaboradorDTO> findById(@PathVariable Long id){
+		ColaboradorDTO colaboradorDTO = service.findById(id);
+		return ResponseEntity.ok().body(colaboradorDTO);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Cargo> insert(@RequestBody Cargo obj){
-		obj = service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+	public ResponseEntity<ColaboradorDTO> insert(@RequestBody ColaboradorDTO colaboradorDTO){
+		Colaborador colaborador = service.insert(colaboradorDTO);
+		ColaboradorDTO createdColaboradorDTO = service.convertToDTO(colaborador);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdColaboradorDTO.getId()).toUri();
+		return ResponseEntity.created(uri).body(createdColaboradorDTO);
 	}
 	
 	@DeleteMapping(value = "/{id}")
@@ -51,7 +53,7 @@ public class CargoResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Cargo> update(@PathVariable Long id, @RequestBody Cargo obj){
+	public ResponseEntity<Colaborador> update(@PathVariable Long id, @RequestBody Colaborador obj){
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}

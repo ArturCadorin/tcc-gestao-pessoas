@@ -9,10 +9,23 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.springframework.beans.BeanUtils;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.gestao_pessoas.tccII.dto.PessoaDTO;
 import com.gestao_pessoas.tccII.enums.Sexo;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_pessoas")
@@ -64,6 +77,9 @@ public class Pessoa implements Serializable{
 		this.rg = rg;
 		this.sexo = sexo;
 		this.empresa = empresa;
+	}
+	public Pessoa(PessoaDTO pessoaDTO) {
+		BeanUtils.copyProperties(pessoaDTO, this);
 	}
 	public Pessoa() {}
 	

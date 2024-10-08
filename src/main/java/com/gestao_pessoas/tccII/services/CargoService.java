@@ -1,12 +1,13 @@
 package com.gestao_pessoas.tccII.services;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.gestao_pessoas.tccII.dto.CargoDTO;
 import com.gestao_pessoas.tccII.entities.Cargo;
 import com.gestao_pessoas.tccII.repositories.CargoRepository;
 import com.gestao_pessoas.tccII.services.exceptions.DatabaseException;
@@ -21,20 +22,41 @@ public class CargoService {
 	private CargoRepository repository;
 	private final String entityName = "Cargo";
 	
+	// Converter a entidade para DTO
+	public CargoDTO convertToDTO(Cargo cargo) {
+		CargoDTO dto = new CargoDTO(cargo);
+		return dto;
+	}
+	
+	// Converter DTO para entidade
+	public Cargo convertToEntity(CargoDTO cargoDTO) {
+	    Cargo cargo = new Cargo(cargoDTO);
+	    return cargo;
+	}
+	
+	// Converter a entidade para uma lista de DTO
+	public List<CargoDTO> convertToDTOList(List<Cargo> cargos) {
+	    return cargos.stream()
+	        .map(cargo -> new CargoDTO(cargo))
+	        .collect(Collectors.toList());
+	}
+	
 	// Buscar todas as empresas
-	public List<Cargo> findAll(){
-		return repository.findAll();
+	public List<CargoDTO> findAll(){
+		List<Cargo> cargos = repository.findAll();
+	    return convertToDTOList(cargos);
 	}
 	
 	// Buscar por ID
-	public Cargo findById(Long id) {
-		Optional<Cargo> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ResourceNotFoundException(entityName, id));
+	public CargoDTO findById(Long id) {
+		Cargo cargo = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(entityName, id));;
+		return convertToDTO(cargo);
 	}
 	
 	// Inserir cargo
-	public Cargo insert(Cargo obj) {
-		return repository.save(obj);
+	public Cargo insert(CargoDTO cargoDTO) {
+		Cargo cargo = convertToEntity(cargoDTO);
+		return repository.save(cargo);
 	}
 		
 	// Deleção cargo

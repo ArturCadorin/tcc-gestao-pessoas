@@ -37,7 +37,7 @@ public class TestConfig implements CommandLineRunner{
 	@Autowired
 	private PlanoCarreiraRepository planoCarreiraRepository;
 	@Autowired
-	private ColaboradorRepository colaboradorRepository;
+	private ColaboradorRepository colaboradorRepository;	
 
 	@Override
 	public void run(String... args) throws Exception {

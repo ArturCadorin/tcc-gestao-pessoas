@@ -1,4 +1,4 @@
-package com.gestao_pessoas.tccII.resources.exceptions;
+package com.gestao_pessoas.tccII.controllers.exceptions;
 
 import java.time.Instant;
 

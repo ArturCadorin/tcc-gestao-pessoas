@@ -6,12 +6,20 @@ import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.BeanUtils;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.gestao_pessoas.tccII.dto.ColaboradorDTO;
 import com.gestao_pessoas.tccII.enums.Sexo;
 import com.gestao_pessoas.tccII.enums.SituacaoColaborador;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_colaborador")
@@ -52,6 +60,10 @@ public class Colaborador extends Pessoa {
 		this.cargo = cargo;
 		this.situacaoColaborador = SituacaoColaborador.TRABALHANDO;
 		this.remuneracao = this.cargo.getNivelProfissional().getRemuneracao();
+	}
+	public Colaborador(ColaboradorDTO colaboradorDTO) {
+		super(colaboradorDTO);
+		BeanUtils.copyProperties(colaboradorDTO, this);
 	}
 	public Colaborador() {
 		super();

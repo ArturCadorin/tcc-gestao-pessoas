@@ -1,4 +1,4 @@
-package com.gestao_pessoas.tccII.resources;
+package com.gestao_pessoas.tccII.controllers;
 
 import java.net.URI;
 import java.util.List;
@@ -15,31 +15,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.gestao_pessoas.tccII.entities.Setor;
-import com.gestao_pessoas.tccII.services.SetorService;
+import com.gestao_pessoas.tccII.entities.PlanoCarreira;
+import com.gestao_pessoas.tccII.services.PlanoCarreiraService;
 
 @RestController
-@RequestMapping(value = "/setor")
-public class SetorResource {
-
+@RequestMapping(value = "/plano_carreira")
+public class PlanoCarreiraController {
+	
 	@Autowired
-	private SetorService service;
+	private PlanoCarreiraService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Setor>> findAll(){
-		
-		List<Setor> list = service.findAll();
+	public ResponseEntity<List<PlanoCarreira>> findAll(){
+		List<PlanoCarreira> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Setor> findById(@PathVariable Long id){
-		Setor obj = service.findById(id);
+	public ResponseEntity<PlanoCarreira> findById(@PathVariable Long id){
+		PlanoCarreira obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Setor> insert(@RequestBody Setor obj){
+	public ResponseEntity<PlanoCarreira> insert(@RequestBody PlanoCarreira obj){
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
@@ -52,7 +51,7 @@ public class SetorResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Setor> update(@PathVariable Long id, @RequestBody Setor obj){
+	public ResponseEntity<PlanoCarreira> update(@PathVariable Long id, @RequestBody PlanoCarreira obj){
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}

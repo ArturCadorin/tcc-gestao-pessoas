@@ -1,4 +1,4 @@
-package com.gestao_pessoas.tccII.resources;
+package com.gestao_pessoas.tccII.controllers;
 
 import java.net.URI;
 import java.util.List;
@@ -20,7 +20,7 @@ import com.gestao_pessoas.tccII.services.EmpresaService;
 
 @RestController
 @RequestMapping(value = "/empresa")
-public class EmpresaResource {
+public class EmpresaController {
 
 	@Autowired
 	private EmpresaService service;
