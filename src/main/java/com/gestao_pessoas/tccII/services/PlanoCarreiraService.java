@@ -1,12 +1,13 @@
 package com.gestao_pessoas.tccII.services;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.gestao_pessoas.tccII.dto.PlanoCarreiraDTO;
 import com.gestao_pessoas.tccII.entities.PlanoCarreira;
 import com.gestao_pessoas.tccII.repositories.PlanoCarreiraRepository;
 import com.gestao_pessoas.tccII.services.exceptions.DatabaseException;
@@ -21,20 +22,41 @@ public class PlanoCarreiraService {
 	private PlanoCarreiraRepository repository;
 	private final String entityName = "Plano_Carreira";
 	
+	// Converter entidade para DTO
+	public PlanoCarreiraDTO convertToDTO(PlanoCarreira planoCarreira) {
+		PlanoCarreiraDTO dto = new PlanoCarreiraDTO(planoCarreira);
+		return dto;
+	}
+	
+	// Converter DTO para entidade
+	public PlanoCarreira convertToEntity(PlanoCarreiraDTO planoCarreiraDTO) {
+		PlanoCarreira planoCarreira = new PlanoCarreira(planoCarreiraDTO);
+		return planoCarreira;
+	}
+	
+	// Converter a entidade para uma lista de DTO
+	public List<PlanoCarreiraDTO> convertToDTOList(List<PlanoCarreira> planoCarreiras) {
+	    return planoCarreiras.stream()
+	        .map(planoCarreira -> new PlanoCarreiraDTO(planoCarreira))
+	        .collect(Collectors.toList());
+	}
+	
 	// Buscar todos os plano de carreiras
-	public List<PlanoCarreira> findAll(){
-		return repository.findAll();
+	public List<PlanoCarreiraDTO> findAll(){
+		List<PlanoCarreira> planoCarreira = repository.findAll();
+		return convertToDTOList(planoCarreira);
 	}
 	
 	// Buscar por ID
-	public PlanoCarreira findById(Long id) {
-		Optional<PlanoCarreira> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ResourceNotFoundException(entityName, id));
+	public PlanoCarreiraDTO findById(Long id) {
+		PlanoCarreira planoCarreira = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(entityName, id));
+		return convertToDTO(planoCarreira);
 	}
 	
 	// Inserir plano carreira
-	public PlanoCarreira insert(PlanoCarreira obj) {
-		return repository.save(obj);
+	public PlanoCarreira insert(PlanoCarreiraDTO planoCarreiraDTO) {
+		PlanoCarreira planoCarreira = convertToEntity(planoCarreiraDTO);
+		return repository.save(planoCarreira);
 	}
 	
 	// Deleção plano carreira

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.gestao_pessoas.tccII.dto.PlanoCarreiraDTO;
 import com.gestao_pessoas.tccII.entities.PlanoCarreira;
 import com.gestao_pessoas.tccII.services.PlanoCarreiraService;
 
@@ -26,22 +27,23 @@ public class PlanoCarreiraController {
 	private PlanoCarreiraService service;
 	
 	@GetMapping
-	public ResponseEntity<List<PlanoCarreira>> findAll(){
-		List<PlanoCarreira> list = service.findAll();
-		return ResponseEntity.ok().body(list);
+	public ResponseEntity<List<PlanoCarreiraDTO>> findAll(){
+		List<PlanoCarreiraDTO> listDTO = service.findAll();
+		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<PlanoCarreira> findById(@PathVariable Long id){
-		PlanoCarreira obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<PlanoCarreiraDTO> findById(@PathVariable Long id){
+		PlanoCarreiraDTO planoCarreiraDTO = service.findById(id);
+		return ResponseEntity.ok().body(planoCarreiraDTO);
 	}
 
 	@PostMapping
-	public ResponseEntity<PlanoCarreira> insert(@RequestBody PlanoCarreira obj){
-		obj = service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+	public ResponseEntity<PlanoCarreiraDTO> insert(@RequestBody PlanoCarreiraDTO planoCarreiraDTO){
+		PlanoCarreira planoCarreira = service.insert(planoCarreiraDTO);
+		PlanoCarreiraDTO createdPlanoCarreiraDTO = service.convertToDTO(planoCarreira);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdPlanoCarreiraDTO.getId()).toUri();
+		return ResponseEntity.created(uri).body(createdPlanoCarreiraDTO);
 	}
 	
 	@DeleteMapping(value = "/{id}")

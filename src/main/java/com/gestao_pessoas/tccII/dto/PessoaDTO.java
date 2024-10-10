@@ -24,6 +24,7 @@ public class PessoaDTO {
 	public PessoaDTO() {
 		
 	}
+	
 	public Long getId() {
 		return id;
 	}

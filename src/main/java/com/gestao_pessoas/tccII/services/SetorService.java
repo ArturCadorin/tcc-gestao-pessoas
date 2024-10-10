@@ -1,12 +1,13 @@
 package com.gestao_pessoas.tccII.services;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.gestao_pessoas.tccII.dto.SetorDTO;
 import com.gestao_pessoas.tccII.entities.Setor;
 import com.gestao_pessoas.tccII.repositories.SetorRepository;
 import com.gestao_pessoas.tccII.services.exceptions.DatabaseException;
@@ -21,20 +22,41 @@ public class SetorService {
 	private SetorRepository repository;
 	private final String entityName = "Setor";
 	
+	// Converter entidade para DTO
+	public SetorDTO convertToDTO(Setor setor) {
+		SetorDTO dto = new SetorDTO(setor);
+		return dto;
+	}
+	
+	// Converter DTO para entidade
+	public Setor convertToEntity(SetorDTO setorDTO) {
+		Setor setor = new Setor(setorDTO);
+		return setor;
+	}
+	
+	// Converter a entidade para uma lista de DTO
+	public List<SetorDTO> convertToDTOList(List<Setor> setores) {
+	    return setores.stream()
+	        .map(setor -> new SetorDTO(setor))
+	        .collect(Collectors.toList());
+	}
+	
 	// Buscar todas as empresas
-	public List<Setor> findAll(){
-		return repository.findAll();
+	public List<SetorDTO> findAll(){
+		List<Setor> setor = repository.findAll();
+		return convertToDTOList(setor);
 	}
 	
 	// Buscar por ID
-	public Setor findById(Long id) {
-		Optional<Setor> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ResourceNotFoundException(entityName, id));
+	public SetorDTO findById(Long id) {
+		Setor setor = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(entityName, id));
+		return convertToDTO(setor);
 	}
 	
 	// Inserir setor
-	public Setor insert(Setor obj) {
-		return repository.save(obj);
+	public Setor insert(SetorDTO setorDTO) {
+		Setor setor = convertToEntity(setorDTO);
+		return repository.save(setor);
 	}
 	
 	// Deleção setor

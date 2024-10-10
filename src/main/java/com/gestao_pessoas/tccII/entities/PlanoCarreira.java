@@ -1,4 +1,4 @@
-package com.gestao_pessoas.tccII.entities;
+	package com.gestao_pessoas.tccII.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,10 +8,20 @@ import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.BeanUtils;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.gestao_pessoas.tccII.dto.PlanoCarreiraDTO;
 import com.gestao_pessoas.tccII.enums.NivelPlanoCarreira;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_plano_carreira")
@@ -46,9 +56,12 @@ public class PlanoCarreira implements Serializable{
 		this.remuneracao = remuneracao;
 		this.dataInicial = dataInicial;
 	}
-	public PlanoCarreira() {
-		super();
+	public PlanoCarreira(PlanoCarreiraDTO planoCarreiraDTO) {
+		BeanUtils.copyProperties(planoCarreiraDTO, this);
 	}
+	public PlanoCarreira() {
+	}
+	
 	
 	//GETTERS e SETTERS
 	public Long getId() {

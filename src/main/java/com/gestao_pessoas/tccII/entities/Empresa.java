@@ -10,9 +10,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.springframework.beans.BeanUtils;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.gestao_pessoas.tccII.dto.EmpresaDTO;
 
 import jakarta.persistence.*;
 
@@ -57,6 +60,9 @@ public class Empresa implements Serializable{
 		this.nome = nome;
 		this.cnpj = cnpj;
 		this.dataInicial = dataInicial;
+	}
+	public Empresa(EmpresaDTO empresaDTO) {
+		BeanUtils.copyProperties(empresaDTO, this);
 	}
 	public Empresa() {}
 	

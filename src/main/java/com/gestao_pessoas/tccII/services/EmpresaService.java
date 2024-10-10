@@ -1,7 +1,7 @@
 package com.gestao_pessoas.tccII.services;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,6 +13,7 @@ import com.gestao_pessoas.tccII.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
 
+import com.gestao_pessoas.tccII.dto.EmpresaDTO;
 import com.gestao_pessoas.tccII.entities.Empresa;
 
 @Service
@@ -22,20 +23,41 @@ public class EmpresaService {
 	private EmpresaRepository repository;
 	private final String entityName = "Empresa";
 	
+	// Converter entidade para DTO
+	public EmpresaDTO convertToDTO(Empresa empresa) {
+		EmpresaDTO dto = new EmpresaDTO(empresa);
+		return dto;
+	}
+	
+	// Converter DTO para entidade
+	public Empresa convertToEntity(EmpresaDTO empresaDTO) {
+		Empresa empresa = new Empresa(empresaDTO);
+		return empresa;
+	}
+	
+	// Converter a entidade para uma lista de DTO
+	public List<EmpresaDTO> convertToDTOList(List<Empresa> empresas) {
+	    return empresas.stream()
+	        .map(empresa -> new EmpresaDTO(empresa))
+	        .collect(Collectors.toList());
+	}
+	
 	// Buscar todas as empresas
-	public List<Empresa> findAll(){
-		return repository.findAll();
+	public List<EmpresaDTO> findAll(){
+		List<Empresa> empresa = repository.findAll();
+		return convertToDTOList(empresa);
 	}
 	
 	// Buscar por ID
-	public Empresa findById(Long id) {
-		Optional<Empresa> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ResourceNotFoundException(entityName, id));
+	public EmpresaDTO findById(Long id) {
+		Empresa empresa = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(entityName, id));
+		return convertToDTO(empresa);
 	}
 	
 	// Inserir empresa
-	public Empresa insert(Empresa obj) {
-		return repository.save(obj);
+	public Empresa insert(EmpresaDTO empresaDTO) {
+		Empresa empresa = convertToEntity(empresaDTO);
+		return repository.save(empresa);
 	}
 	
 	// Deleção empresa
